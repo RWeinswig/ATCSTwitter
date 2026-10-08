@@ -16,5 +16,11 @@
         "password": "12345678",
         "list_of_friends": [],
         "posts": []
+    },
+    "Testing": {
+        "username": "Testing",
+        "password": "12345678",
+        "list_of_friends": [],
+        "posts": []
     }
 }

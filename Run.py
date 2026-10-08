@@ -29,6 +29,7 @@ def enterAnInputToLogIn():
     return inputOfUser
 
 def main():
+    print ("Welcome to ATCS Twitter!")
     accounts = loadAccounts()
 
     
@@ -41,13 +42,23 @@ def main():
             print(f"{e}\n")
 
 
+    current_user = None
     if (userInput == 1):
         createAccount(accounts)
     else:
         
         username = input("Username: ")
         password = input("Password: ")
-        checkLogIn(username, password, accounts)
+        if checkLogIn(username, password, accounts):
+            current_user = username
+
+    # Assuming that login and create account checking alr exists
+    while current_user is not None:
+        choice = input("1. Add Friend  2. Log Out\n")
+        if choice == "1":
+            addFriend(current_user, accounts)
+        elif choice == "2":
+            current_user = None
 
 def checkLogIn(username, password, accounts):
     if (checkIfPasswordIsRight(username, password, accounts)):
@@ -56,7 +67,6 @@ def checkLogIn(username, password, accounts):
     else:
         print("Log in is not possible")
         return False
-
 
 if __name__ == "__main__":
     main()
