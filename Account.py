@@ -1,15 +1,12 @@
-import json
-FILENAME = "accounts.JSON"
 
 class Account:
-
-
+    # Initializes somebody's account
     def __init__(self, username, password, list_of_friends=None, posts=None):
         self.username = username
         self.password = password
         self.list_of_friends = list_of_friends if list_of_friends is not None else []
         self.posts = posts if posts is not None else []
-
+    # This function saves the account info to a dictionary to be saved to a JSON file when the account is closed
     def to_dict(self):
         return {
             "username": self.username,
@@ -17,19 +14,7 @@ class Account:
             "list_of_friends": self.list_of_friends,
             "posts": self.posts,
         }
-
-    def saveAccounts(accounts):
-        data = {username: account.to_dict() for username, account in accounts.items()}
-        with open (FILENAME, "w") as f:
-            json.dump(data, f, indent=4)
-
-    def loadAccounts():
-        try:
-            with open(FILENAME, "r") as f:
-                data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            return {}
-        return {username: Account(**info) for username, info in data.items()}
+    
 
 
     

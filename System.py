@@ -1,4 +1,7 @@
-from Account import Account, saveAccounts
+from Account import Account
+import json
+# Will add the filename into gitignore eventually
+FILENAME = "accounts.JSON"
 
 class System:
 
@@ -67,3 +70,18 @@ def createAccount(accounts):
         # 4. Confirm
         print(f"Account created. Welcome, {username}!")
         return new_account
+
+# Saves each account to a JSON file when app is closed
+def saveAccounts(accounts):
+    data = {username: account.to_dict() for username, account in accounts.items()}
+    with open (FILENAME, "w") as f:
+        json.dump(data, f, indent=4)
+# Reads in every account from the JSON file and creates account with all their info for each
+def loadAccounts():
+    try:
+        with open(FILENAME, "r") as f:
+            data = json.load(f)
+    # This ensures that if the file path is off or there is a problem with JSON it doesn't crash
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+    return {username: Account(**info) for username, info in data.items()}
