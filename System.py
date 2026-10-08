@@ -5,14 +5,21 @@ FILENAME = "accounts.JSON"
 
 class System:
 
+    
+
     accounts = {}
     posts = {}
 
     def checkIfUserNameIsRight(username):
-        pass
+        if (username in self.accounts):
+            return True
+        else:
+            return False
 
-    def checkIfPasswordIsRight(password):
-        pass
+    def checkIfPasswordIsRight(username, password):
+        if (self.checkIfUserNameIsRight(username)):
+            if (self.accounts[username] == password):
+                return True
 
     def changePassword(account):
         pass
@@ -27,6 +34,7 @@ class System:
         pass
 
     def logIn(username, password):
+
         pass
 
     def typePost():
