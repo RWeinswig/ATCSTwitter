@@ -4,11 +4,11 @@ FILENAME = "accounts.JSON"
 class Account:
 
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, list_of_friends=None, posts=None):
         self.username = username
         self.password = password
-        self.list_of_friends = []
-        self.posts = []
+        self.list_of_friends = list_of_friends if list_of_friends is not None else []
+        self.posts = posts if posts is not None else []
 
     def to_dict(self):
         return {
@@ -17,6 +17,22 @@ class Account:
             "list_of_friends": self.list_of_friends,
             "posts": self.posts,
         }
+
+    def saveAccounts(accounts):
+        data = {username: account.to_dict() for username, account in accounts.items()}
+        with open (FILENAME, "w") as f:
+            json.dump(data, f, indent=4)
+
+    def loadAccounts():
+        try:
+            with open(FILENAME, "r") as f:
+                data = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            return {}
+        return {username: Account(**info) for username, info in data.items()}
+
+
+    
 
     def typeAPost():
         pass
@@ -32,27 +48,3 @@ class Account:
 
     def checkToSeeIfYouCanView():
         pass
-
-
-def saveAccounts(accounts):
-    data = {}
-    for username in accounts:
-        data[username] = accounts[username].to_dict()
-    with open(FILENAME, "w") as f:
-        json.dump(data, f, indent=4)
-
-
-def loadAccounts():
-    try:
-        with open(FILENAME, "r") as f:
-            data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-    accounts = {}
-    for username in data:
-        info = data[username]
-        account = Account(info["username"], info["password"])
-        account.list_of_friends = info["list_of_friends"]
-        account.posts = info["posts"]
-        accounts[username] = account
-    return accounts
