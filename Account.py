@@ -1,4 +1,4 @@
-
+from System import loadAccounts
 class Account:
     # Initializes somebody's account
     def __init__(self, username, password, list_of_friends=None, posts=None):
@@ -22,8 +22,11 @@ class Account:
     def typeAPost():
         pass
 
-    def AddFriend(username):
-        pass
+    def addFriend(self, username):
+        if username in self.list_of_friends:
+            return False
+        else:
+            return True
 
     def changeUsername():
         pass

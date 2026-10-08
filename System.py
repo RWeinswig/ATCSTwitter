@@ -1,4 +1,5 @@
 from Account import Account
+
 import json
 # Will add the filename into gitignore eventually
 FILENAME = "accounts.JSON"
@@ -33,7 +34,16 @@ class System:
         pass
 
     def addFriend():
-        pass
+        # Check this again 
+        friend = input("Who do you want to add? ")
+        if username == current_user.username:
+            print("You can't add yourself")
+        elif Account.addFriend(friend) == False:
+            print("You already have this friend added")
+        else:
+            saveAccounts(Accounts)
+
+
 
 
 
