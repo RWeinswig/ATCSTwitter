@@ -10,17 +10,7 @@ class System:
     accounts = {}
     posts = {}
 
-    def checkIfUserNameIsRight(username):
-        if (username in self.accounts):
-            return True
-        else:
-            return False
-
-    def checkIfPasswordIsRight(username, password):
-        if (self.checkIfUserNameIsRight(username)):
-            if (self.accounts[username] == password):
-                return True
-
+   
     def changePassword(account):
         pass
 
@@ -78,6 +68,20 @@ def createAccount(accounts):
         # 4. Confirm
         print(f"Account created. Welcome, {username}!")
         return new_account
+
+
+def checkIfUserNameIsRight(username, accounts):
+    if (username in accounts):
+        return True
+    else:
+        return False
+
+def checkIfPasswordIsRight(username, password, accounts):
+    if (checkIfUserNameIsRight(username, accounts)):
+        if (accounts[username].password == password):
+            return True
+        return False
+
 
 # Saves each account to a JSON file when app is closed
 def saveAccounts(accounts):
