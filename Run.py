@@ -3,42 +3,59 @@ from System import createAccount
 from System import checkIfPasswordIsRight
 from System import checkIfUserNameIsRight
 
-def notAPossibleOption(exception):
-    pass
 
 '''
 Will add comments later: wanted to get the code in. If you have any questions, please let me know
 '''
 
+
+def validate_user_choice(choice_str):
+    try:
+        choice = int(choice_str)
+        if (choice not in (1,2)):
+            raise ValueError("Please enter an integer 1 or 2! ")
+        return choice
+    except ValueError as e:
+
+        if "Please enter" in str(e):
+            raise
+
+        raise ValueError("Please enter a number either 1 or 2! ")
+    
+        
+
 def enterAnInput():
-    inputOfUser = int(input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n"))
+    inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
     return inputOfUser
 
 def main():
     accounts = loadAccounts()
+
+    
     while True:
         try:
-            userChoice = enterAnInput()
-
-            if (userChoice not in (1,2)):
-                raise notAPossibleOption("Please enter a number either 1 or 2. ")
-            
+            userInput = enterAnInput()
+            validate_user_choice(userInput)
             break
-        except ValueError:
-            print("Please enter a number either 1 or 2. ")
-        except notAPossibleOption as e:
-            print(f"{e} \n")
-       
+        except ValueError as e:
+            print(f"{e}\n")
 
-    if (userChoice == 1):
+
+    if (userInput == 1):
         createAccount(accounts)
     else:
+        
         username = input("Username: ")
         password = input("Password: ")
-        if (checkIfPasswordIsRight(username, password, accounts)):
-            print("Log In is possible")
-        else:
-            print("Log in is not possible")
+        checkLogIn(username, password, accounts)
+
+def checkLogIn(username, password, accounts):
+    if (checkIfPasswordIsRight(username, password, accounts)):
+        print("Log In is possible")
+        return True
+    else:
+        print("Log in is not possible")
+        return False
 
 
 if __name__ == "__main__":
