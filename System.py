@@ -5,15 +5,12 @@ FILENAME = "accounts.JSON"
 
 class System:
 
+    
+
     accounts = {}
     posts = {}
 
-    def checkIfUserNameIsRight(username):
-        pass
-
-    def checkIfPasswordIsRight(password):
-        pass
-
+   
     def changePassword(account):
         pass
 
@@ -27,6 +24,7 @@ class System:
         pass
 
     def logIn(username, password):
+
         pass
 
     def typePost():
@@ -70,6 +68,24 @@ def createAccount(accounts):
         # 4. Confirm
         print(f"Account created. Welcome, {username}!")
         return new_account
+
+
+# This takes in a username and goes through all of the accounts
+# If the username matches with one in the accounts, it returns True
+def checkIfUserNameIsRight(username, accounts):
+    if (username in accounts):
+        return True
+    else:
+        return False
+
+# This function takes in a username, password, and the accounts
+# It checks to make sure that the username exists, then checks to make sure that the password matches the username
+def checkIfPasswordIsRight(username, password, accounts):
+    if (checkIfUserNameIsRight(username, accounts)):
+        if (accounts[username].password == password):
+            return True
+        return False
+    return False
 
 # Saves each account to a JSON file when app is closed
 def saveAccounts(accounts):

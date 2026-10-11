@@ -1,10 +1,61 @@
 from System import loadAccounts
 from System import createAccount
+from System import checkIfPasswordIsRight
+from System import checkIfUserNameIsRight
 
+
+'''
+Will add comments later: wanted to get the code in. If you have any questions, please let me know
+'''
+
+
+def validate_user_choice(choice_str):
+    try:
+        choice = int(choice_str)
+        if (choice not in (1,2)):
+            raise ValueError("Please enter an integer 1 or 2! ")
+        return choice
+    except ValueError as e:
+
+        if "Please enter" in str(e):
+            raise
+
+        raise ValueError("Please enter a number either 1 or 2! ")
+    
+        
+
+def enterAnInputToLogIn():
+    inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
+    return inputOfUser
 
 def main():
     accounts = loadAccounts()
-    createAccount(accounts)
+
+    
+    while True:
+        try:
+            userInput = enterAnInputToLogIn()
+            validate_user_choice(userInput)
+            break
+        except ValueError as e:
+            print(f"{e}\n")
+
+
+    if (userInput == 1):
+        createAccount(accounts)
+    else:
+        
+        username = input("Username: ")
+        password = input("Password: ")
+        checkLogIn(username, password, accounts)
+
+def checkLogIn(username, password, accounts):
+    if (checkIfPasswordIsRight(username, password, accounts)):
+        print("Log In is possible")
+        return True
+    else:
+        print("Log in is not possible")
+        return False
 
 
 if __name__ == "__main__":
