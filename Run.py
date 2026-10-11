@@ -24,7 +24,7 @@ def validate_user_choice(choice_str):
     
         
 
-def enterAnInput():
+def enterAnInputToLogIn():
     inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
     return inputOfUser
 
@@ -34,7 +34,7 @@ def main():
     
     while True:
         try:
-            userInput = enterAnInput()
+            userInput = enterAnInputToLogIn()
             validate_user_choice(userInput)
             break
         except ValueError as e:
