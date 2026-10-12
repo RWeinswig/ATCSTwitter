@@ -9,7 +9,7 @@ class System:
     
 
     accounts = {}
-    posts = {}
+    posts = []
 
     def checkIfUserNameIsRight(username):
         if (username in self.accounts):
