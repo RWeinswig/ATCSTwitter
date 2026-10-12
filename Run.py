@@ -44,6 +44,7 @@ def initializeAccount(userInput, accounts):
 # Keeps going back to the home screen until someone is logged in
 def logIn(accounts):
     current_user = None
+    # Goes through process of either having the user create an account or login
     while current_user is None:
         current_user = initializeAccount(homeScreen(), accounts)
     return current_user
