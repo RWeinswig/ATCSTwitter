@@ -1,3 +1,7 @@
+import os
+import sys
+# Lets this file find the project modules when run directly (not just via pytest)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pytest
 from System import checkIfUserNameIsRight
 from Account import Account
@@ -32,3 +36,6 @@ def test_check_password_but_username_incorrect():
     my_account = Account("user1", "1234")
     accounts = {"user1": my_account}
     assert checkIfPasswordIsRight("user2", "1234", accounts) == False
+
+if __name__ == "__main__":
+    sys.exit(pytest.main([__file__]))

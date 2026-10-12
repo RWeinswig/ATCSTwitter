@@ -1,8 +1,13 @@
+import os
+import sys
+# Lets this file find the project modules when run directly (not just via pytest)
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import unittest
 import pytest
 from Run import checkLogIn
 from Account import Account
 from Run import validate_user_choice
+from System import System
 
 # Checks if log in actually works
 def test_correct_check_login():
@@ -34,7 +39,17 @@ def test_user_choice_incorrect_input_for_wrong_number():
         validate_user_choice("3")
 
     assert str(info.value) == "Please enter an integer 1 or 2! "
-    
+
+# Checks that alreadyFriends detects a friend who has already been added
+def test_friend_already_exists():
+    account = Account("juan", "12345678", ["fletcher"])
+    assert account.alreadyFriends("fletcher") == True
+    assert account.alreadyFriends("ryan w") == False
+# Tests if adding an invalid friend fails
+def test_adding_invalid_friend():
+    accounts = {"juan": Account("juan", "12345678", ["fletcher"])}
+    assert System.addFriend("juan", "jacob", accounts) == False   # jacob doesn't exist
 
 
-    
+if __name__ == "__main__":
+    sys.exit(pytest.main([__file__]))
