@@ -31,15 +31,21 @@ class System:
     def typePost():
         pass
 
-    def addFriend():
-        # Check this again 
-        friend = input("Who do you want to add? ")
-        if username == current_user.username:
+
+def addFriend(current_user, accounts):
+        # Adds the friend to the current users friend list if friend is valid
+        user_account = accounts[current_user]
+        friend = input("Who do you want to add? ").strip()
+        if friend == current_user:
             print("You can't add yourself")
-        elif Account.addFriend(friend) == False:
+        elif friend not in accounts:
+            print("That user doesn't exist")
+        elif user_account.alreadyFriends(friend):
             print("You already have this friend added")
         else:
-            saveAccounts(Accounts)
+            user_account.addFriend(friend)
+            saveAccounts(accounts)
+            print(f"Added {friend} as a friend")
 
 
 
