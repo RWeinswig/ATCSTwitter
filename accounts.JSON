@@ -30,5 +30,13 @@
             "fletcher"
         ],
         "posts": []
+    },
+    "ryan": {
+        "username": "ryan",
+        "password": "12345678",
+        "list_of_friends": [
+            "juan"
+        ],
+        "posts": []
     }
 }
