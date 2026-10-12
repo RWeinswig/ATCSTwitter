@@ -1,7 +1,7 @@
 from System import loadAccounts
 from System import createAccount
 from System import checkIfPasswordIsRight
-from System import addFriend
+from System import System
 from Account import *
 
 '''
@@ -42,7 +42,7 @@ def main():
         except ValueError as e:
             print(f"{e}\n")
 
-
+    # Initializes the state of the current user
     current_user = None
     if (userInput == 1):
         createAccount(accounts)
@@ -53,11 +53,12 @@ def main():
         if checkLogIn(username, password, accounts):
             current_user = username
 
-    # Assuming that login and create account checking alr exists
+    # Main loop that the user experiences
     while current_user is not None:
         choice = input("1. Add Friend  2. Log Out 3. Show Friends \n")
         if choice == "1":
-            addFriend(current_user, accounts)
+            friend = input("Who do you want to add? ").strip()
+            System.addFriend(current_user, friend, accounts)
         elif choice == "2":
             current_user = None
         elif choice == "3":
