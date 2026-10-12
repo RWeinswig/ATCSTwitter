@@ -17,13 +17,23 @@ class Account:
     
 
 
-    
+    def showFriends(self):
+        if not self.list_of_friends:
+            print("You have no friends! ")
+        else:
+            for friend in self.list_of_friends:
+                print(friend)
 
     def typeAPost():
         pass
 
-    def AddFriend(username):
-        pass
+    def addFriend(self, username):
+        self.list_of_friends.append(username)
+
+    def alreadyFriends(self, username):
+        return username in self.list_of_friends
+
+    
 
     def changeUsername():
         pass
