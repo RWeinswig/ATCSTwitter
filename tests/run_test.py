@@ -50,6 +50,13 @@ def test_adding_invalid_friend():
     accounts = {"juan": Account("juan", "12345678", ["fletcher"])}
     assert System.addFriend("juan", "jacob", accounts) == False   # jacob doesn't exist
 
+# This essentially tests the logout feature because the feature just prompts you to login as someone else
+def test_logout():
+    accounts = {
+        "user1": Account("user1", "1234"),
+        "user2": Account("user2", "5678")
+    }
+    assert checkLogIn("user2", "5678", accounts) == True
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__]))

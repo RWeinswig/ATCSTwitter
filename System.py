@@ -18,8 +18,6 @@ class System:
     def changeUsername(account):
         pass
 
-    def logOut():
-        pass
 
     def viewPosts(username):
         pass
