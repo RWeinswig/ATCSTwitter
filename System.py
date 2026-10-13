@@ -1,4 +1,5 @@
 from Account import Account
+from Post import Post
 
 import json
 # Will add the filename into gitignore eventually
@@ -17,7 +18,7 @@ class System:
         else:
             return False
 
-    def checkIfPasswordIsRight(username, password):
+    def checkIfPasswordIsRight(self, username, password):
         if (self.checkIfUserNameIsRight(username)):
             if (self.accounts[username] == password):
                 return True
@@ -129,3 +130,24 @@ def loadAccounts():
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
     return {username: Account(**info) for username, info in data.items()}
+
+def createPost(username, accounts):
+    # Gets the username in order to store that with post
+    user_account = accounts[username]
+
+    content = input("What would you like to post? ").strip()
+
+    if not content:
+        print("Your post cannot be empty.")
+        return
+
+    # Create the post
+    post = Post(username, content)
+
+    # Store the post as a dictionary so it can be saved to JSON
+    user_account.posts.append(post.to_dict())
+
+    # Save the updated accounts
+    saveAccounts(accounts)
+
+    print("Post created successfully!")

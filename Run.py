@@ -2,6 +2,7 @@ from System import loadAccounts
 from System import createAccount
 from System import checkIfPasswordIsRight
 from System import System
+from System import createPost
 from Account import *
 
 '''
@@ -25,7 +26,6 @@ def validate_user_choice(choice_str):
     
         
 
-def enterAnInputToLogIn():
 def enterAnInputToLogIn():
     inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
     return inputOfUser
@@ -56,7 +56,7 @@ def main():
 
     # Main loop that the user experiences
     while current_user is not None:
-        choice = input("1. Add Friend  2. Log Out 3. Show Friends \n")
+        choice = input("1. Add Friend  2. Log Out 3. Show Friends 4. Create a Post\n")
         if choice == "1":
             friend = input("Who do you want to add? ").strip()
             System.addFriend(current_user, friend, accounts)
@@ -64,7 +64,8 @@ def main():
             current_user = None
         elif choice == "3":
             accounts[current_user].showFriends()
-
+        elif choice == "4":
+            createPost(current_user, accounts)
 
 def checkLogIn(username, password, accounts):
     if (checkIfPasswordIsRight(username, password, accounts)):

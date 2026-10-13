@@ -1,16 +1,16 @@
 from datetime import datetime
 
+
 class Post:
+    def __init__(self, username, content):
+        self.username = username
+        self.content = content
+        self.timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def __init__(self):
-        pass
-
-    def createPost(username):
-        userPost = input("What would you like to post: ")
-        
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        post = {"Time stamp": current_time, "User": username}
-        return post
-
-
+    #returns the post in its form
+    def to_dict(self):
+        return {
+            "User": self.username,
+            "Content": self.content,
+            "Time stamp": self.timestamp
+        }
