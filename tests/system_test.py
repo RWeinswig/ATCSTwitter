@@ -39,6 +39,7 @@ def test_password_incorrect():
 # Checks to make sure that when the username doesn't exist but tge password does, it still returns false
 def test_check_password_but_username_incorrect():
     my_account = Account("user1", "1234")
+
     accounts = {"user1": my_account}
     assert checkIfPasswordIsRight("user2", "1234", accounts) == False
 
