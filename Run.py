@@ -1,15 +1,20 @@
-from System import System, loadAccounts, createAccount, checkIfPasswordIsRight, createPost
+# Programmers: Ryan Weinswig and Fletcher Cahill
+# Date: October 14th, 2026
 
+from System import System, loadAccounts, createPost
 
 # Turns the user's menu input into 1 or 2, raising a ValueError with a helpful message otherwise
 def validate_user_choice(choice_str):
     try:
         choice = int(choice_str)
-    except ValueError:
+        # Fixes bug that didn't turn input into an integer
+        if choice not in (1, 2):
+            raise ValueError("Please enter an integer 1 or 2! ")
+        return choice
+    except ValueError as e:
+        if "Please enter" in str(e):
+            raise
         raise ValueError("Please enter a number either 1 or 2! ")
-    if choice not in (1, 2):
-        raise ValueError("Please enter an integer 1 or 2! ")
-    return choice
 
 
 # First things the user sees
@@ -21,19 +26,21 @@ def homeScreen():
             print(f"{e}\n")
 
 
+# Verifies a correct login given a username and a password
 def checkLogIn(username, password, accounts):
-    if checkIfPasswordIsRight(username, password, accounts):
+    if System.checkIfPasswordIsRight(username, password, accounts):
         print("Log In is possible")
         return True
-    print("Log in is not possible")
-    return False
+    else:
+        print("Log in is not possible")
+        return False
 
 
 # Creates an account or logs in based on the user's choice
 # Returns the username of the logged-in user, or None if logging in failed
-def initializeAccount(userInput, accounts):
-    if userInput == 1:
-        return createAccount(accounts).username
+def initializeAccount(user_input, accounts):
+    if user_input == 1:
+        return System.createAccount(accounts).username
     username = input("Username: ")
     password = input("Password: ")
     if checkLogIn(username, password, accounts):
@@ -49,28 +56,8 @@ def logIn(accounts):
         current_user = initializeAccount(homeScreen(), accounts)
     return current_user
 
-'''
-Will add comments later: wanted to get the code in. If you have any questions, please let me know
-'''
 
-
-def validate_user_choice(choice_str):
-    try:
-        choice = int(choice_str)
-        # Fixes bug that didn't turn input into an integer
-        if (choice not in (1,2)):
-            raise ValueError("Please enter an integer 1 or 2! ")
-        return choice
-    except ValueError as e:
-        if "Please enter" in str(e):
-            raise
-        raise ValueError("Please enter a number either 1 or 2! ")
-    
-# Gives the user the initial options
-def enterAnInputToLogIn():
-    inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
-    return inputOfUser
-# Main loop that the user will experience 
+# Main loop that the user experiences 
 def main():
     print("Welcome to ATCS Twitter!")
     accounts = loadAccounts()
@@ -78,7 +65,7 @@ def main():
 
     # Main loop that the user experiences
     while True:
-        choice = input("1. Add Friend  2. Log Out  3. Show Friends  4. Browse Friends' Posts 5. Create a post \n")
+        choice = input("1. Add Friend  2. Log Out  3. Show Friends  4. Browse Friends' Posts  5. Create a post \n")
         if choice == "1":
             friend = input("Who do you want to add? ").strip()
             System.addFriend(current_user, friend, accounts)
@@ -91,14 +78,7 @@ def main():
             System.viewPosts(current_user, accounts)
         elif choice == "5":
             createPost(current_user, accounts)
-# Verifies a correct login given a username and a password
-def checkLogIn(username, password, accounts):
-    if (checkIfPasswordIsRight(username, password, accounts)):
-        print("Log In is possible")
-        return True
-    else:
-        print("Log in is not possible")
-        return False
+
 
 if __name__ == "__main__":
     main()

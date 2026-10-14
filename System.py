@@ -1,3 +1,6 @@
+# Programmers: Ryan Weinswig and Fletcher Cahill
+# Date: October 14th, 2026
+
 from Account import Account
 from Post import Post
 import json
@@ -7,17 +10,28 @@ FILENAME = "accounts.JSON"
 class System:
     accounts = {}
     posts = []
-    # Verifies user in accounts
-    def checkIfUserNameIsRight(username):
-        if (username in self.accounts):
+
+    # This takes in a username and goes through all of the accounts
+    # If the username matches with one in the accounts, it returns True
+    @staticmethod
+    def checkIfUserNameIsRight(username, accounts):
+        if username in accounts:
             return True
         else:
             return False
 
-    def checkIfPasswordIsRight(self, username, password):
-        if (self.checkIfUserNameIsRight(username)):
-            if (self.accounts[username] == password):
+    # This function takes in a username, password, and the accounts
+    # It checks to make sure that the username exists, then checks to make sure that the password matches the username
+    @staticmethod
+    def checkIfPasswordIsRight(username, password, accounts):
+        if System.checkIfUserNameIsRight(username, accounts):
+            if accounts[username].password == password:
                 return True
+            return False
+        return False
+
+    # Prints every post made by the current user's friends and returns them            
+    @staticmethod
     def viewPosts(current_user, accounts):
         # Prints every post made by the current user's friends and returns them
         friend_posts = []
@@ -28,26 +42,30 @@ class System:
         for post in friend_posts:
             print(f"{post['User']} ({post['Time stamp']}): {post['Content']}")
         return friend_posts
-    
+
+    @staticmethod
     def addFriend(current_user, friend, accounts):
-            # Adds the friend to the current users friend list if friend is valid
-            user_account = accounts[current_user]
-            if friend == current_user:
-                print("You can't add yourself")
-                return False
-            elif friend not in accounts:
-                print("That user doesn't exist")
-                return False
-            elif user_account.alreadyFriends(friend):
-                print("You already have this friend added")
-                return False
-            else:
-                user_account.addFriend(friend)
-                saveAccounts(accounts)
-                print(f"Added {friend} as a friend")
-                return True
-def createAccount(accounts):
-        # accounts = dictionary of existing users {username: Account}
+        # Adds the friend to the current users friend list if friend is valid
+        user_account = accounts[current_user]
+        if friend == current_user:
+            print("You can't add yourself")
+            return False
+        elif friend not in accounts:
+            print("That user doesn't exist")
+            return False
+        elif user_account.alreadyFriends(friend):
+            print("You already have this friend added")
+            return False
+        else:
+            user_account.addFriend(friend)
+            saveAccounts(accounts)
+            print(f"Added {friend} as a friend")
+            return True
+            
+    # Creates a new user account with validation
+    @staticmethod
+    def createAccount(accounts):
+        # Accounts = dictionary of existing users {username: Account}
 
         # 1. Get a valid username
         while True:
@@ -81,28 +99,13 @@ def createAccount(accounts):
         return new_account
 
 
-# This takes in a username and goes through all of the accounts
-# If the username matches with one in the accounts, it returns True
-def checkIfUserNameIsRight(username, accounts):
-    if (username in accounts):
-        return True
-    else:
-        return False
-
-# This function takes in a username, password, and the accounts
-# It checks to make sure that the username exists, then checks to make sure that the password matches the username
-def checkIfPasswordIsRight(username, password, accounts):
-    if (checkIfUserNameIsRight(username, accounts)):
-        if (accounts[username].password == password):
-            return True
-        return False
-    return False
-
 # Saves each account to a JSON file when app is closed
 def saveAccounts(accounts):
     data = {username: account.to_dict() for username, account in accounts.items()}
-    with open (FILENAME, "w") as f:
+    with open(FILENAME, "w") as f:
         json.dump(data, f, indent=4)
+
+
 # Reads in every account from the JSON file and creates account with all their info for each
 def loadAccounts():
     try:
@@ -112,6 +115,7 @@ def loadAccounts():
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
     return {username: Account(**info) for username, info in data.items()}
+
 
 def createPost(username, accounts):
     # Gets the username in order to store that with post
