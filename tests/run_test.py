@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import unittest
 import pytest
+from datetime import datetime
 from Run import checkLogIn
 from Account import Account
 from Run import validate_user_choice
@@ -69,6 +70,15 @@ def test_view_friends_posts():
         "jacob": Account("jacob", "12345678", [], [stranger_post])
     }
     assert System.viewPosts("juan", accounts) == [friend_post]
+
+# Checks that a post stores its info correctly and turns into the right dictionary
+def test_post():
+    post = Post("test_user", "Hello world!")
+    assert post.username == "test_user"
+    assert post.content == "Hello world!"
+    # Raises a ValueError (failing the test) if the timestamp isn't in this format
+    datetime.strptime(post.timestamp, "%Y-%m-%d %H:%M:%S")
+    assert post.to_dict() == {"User": "test_user", "Content": "Hello world!", "Time stamp": post.timestamp}
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__]))
