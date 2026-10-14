@@ -64,11 +64,13 @@ def test_logout():
 def test_view_friends_posts():
     friend_post = Post("fletcher", "hello").to_dict()
     stranger_post = Post("jacob", "hi").to_dict()
+    # Creates accounts where juan is friends with Fletcher
     accounts = {
         "juan": Account("juan", "12345678", ["fletcher"]),
         "fletcher": Account("fletcher", "12345678", [], [friend_post]),
         "jacob": Account("jacob", "12345678", [], [stranger_post])
     }
+    # Checks if juan, who's friends with Fletcher who has a post, can see the posts
     assert System.viewPosts("juan", accounts) == [friend_post]
 
 # Checks that a post stores its info correctly and turns into the right dictionary
