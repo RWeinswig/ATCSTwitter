@@ -29,6 +29,13 @@
         "list_of_friends": [
             "fletcher"
         ],
+        "posts": [
+            {
+                "User": "juan",
+                "Content": "Ryan",
+                "Time stamp": "2026-10-12 17:28:53"
+            }
+        ]
         "posts": []
     },
     "ryan": {
