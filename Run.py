@@ -1,4 +1,4 @@
-from System import System, loadAccounts, createAccount, checkIfPasswordIsRight
+from System import System, loadAccounts, createAccount, checkIfPasswordIsRight, createPost
 
 
 # Turns the user's menu input into 1 or 2, raising a ValueError with a helpful message otherwise
@@ -62,18 +62,15 @@ def validate_user_choice(choice_str):
             raise ValueError("Please enter an integer 1 or 2! ")
         return choice
     except ValueError as e:
-
         if "Please enter" in str(e):
             raise
-
         raise ValueError("Please enter a number either 1 or 2! ")
     
-        
-
+# Gives the user the initial options
 def enterAnInputToLogIn():
     inputOfUser = input("Choose an option: \n 1. Create an account \n 2. Log In to your Account\n")
     return inputOfUser
-
+# Main loop that the user will experience 
 def main():
     print("Welcome to ATCS Twitter!")
     accounts = loadAccounts()
@@ -81,7 +78,7 @@ def main():
 
     # Main loop that the user experiences
     while True:
-        choice = input("1. Add Friend  2. Log Out  3. Show Friends\n")
+        choice = input("1. Add Friend  2. Log Out  3. Show Friends  4. Browse Friends' Posts 5. Create a post \n")
         if choice == "1":
             friend = input("Who do you want to add? ").strip()
             System.addFriend(current_user, friend, accounts)
@@ -90,40 +87,11 @@ def main():
             current_user = logIn(accounts)
         elif choice == "3":
             accounts[current_user].showFriends()
-
-    
-    while True:
-        try:
-            userInput = enterAnInputToLogIn()
-            userInput = validate_user_choice(userInput)
-            break
-        except ValueError as e:
-            print(f"{e}\n")
-
-    # Initializes the state of the current user
-    current_user = None
-    if (userInput == 1):
-        createAccount(accounts)
-    else:
-        
-        username = input("Username: ")
-        password = input("Password: ")
-        if checkLogIn(username, password, accounts):
-            current_user = username
-
-    # Main loop that the user experiences
-    while current_user is not None:
-        choice = input("1. Add Friend  2. Log Out 3. Show Friends 4. Create a Post\n")
-        if choice == "1":
-            friend = input("Who do you want to add? ").strip()
-            System.addFriend(current_user, friend, accounts)
-        elif choice == "2":
-            current_user = None
-        elif choice == "3":
-            accounts[current_user].showFriends()
         elif choice == "4":
+            System.viewPosts(current_user, accounts)
+        elif choice == "5":
             createPost(current_user, accounts)
-
+# Verifies a correct login given a username and a password
 def checkLogIn(username, password, accounts):
     if (checkIfPasswordIsRight(username, password, accounts)):
         print("Log In is possible")

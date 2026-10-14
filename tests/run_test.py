@@ -4,10 +4,12 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import unittest
 import pytest
+from datetime import datetime
 from Run import checkLogIn
 from Account import Account
 from Run import validate_user_choice
 from System import System
+from Post import Post
 
 # Checks if log in actually works
 def test_correct_check_login():
@@ -57,6 +59,28 @@ def test_logout():
         "user2": Account("user2", "5678")
     }
     assert checkLogIn("user2", "5678", accounts) == True
+
+# Checks that browsing posts only shows posts from friends
+def test_view_friends_posts():
+    friend_post = Post("fletcher", "hello").to_dict()
+    stranger_post = Post("jacob", "hi").to_dict()
+    # Creates accounts where juan is friends with Fletcher
+    accounts = {
+        "juan": Account("juan", "12345678", ["fletcher"]),
+        "fletcher": Account("fletcher", "12345678", [], [friend_post]),
+        "jacob": Account("jacob", "12345678", [], [stranger_post])
+    }
+    # Checks if juan, who's friends with Fletcher who has a post, can see the posts
+    assert System.viewPosts("juan", accounts) == [friend_post]
+
+# Checks that a post stores its info correctly and turns into the right dictionary
+def test_post():
+    post = Post("test_user", "Hello world!")
+    assert post.username == "test_user"
+    assert post.content == "Hello world!"
+    # Raises a ValueError (failing the test) if the timestamp isn't in this format
+    datetime.strptime(post.timestamp, "%Y-%m-%d %H:%M:%S")
+    assert post.to_dict() == {"User": "test_user", "Content": "Hello world!", "Time stamp": post.timestamp}
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__]))
