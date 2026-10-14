@@ -22,14 +22,13 @@ class System:
         if (self.checkIfUserNameIsRight(username)):
             if (self.accounts[username] == password):
                 return True
+   
     def changePassword(account):
         pass
 
     def changeUsername(account):
         pass
 
-    def logOut():
-        pass
 
     def viewPosts(username):
         pass
