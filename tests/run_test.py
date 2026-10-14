@@ -8,6 +8,7 @@ from Run import checkLogIn
 from Account import Account
 from Run import validate_user_choice
 from System import System
+from Post import Post
 
 # Checks if log in actually works
 def test_correct_check_login():
@@ -57,6 +58,17 @@ def test_logout():
         "user2": Account("user2", "5678")
     }
     assert checkLogIn("user2", "5678", accounts) == True
+
+# Checks that browsing posts only shows posts from friends
+def test_view_friends_posts():
+    friend_post = Post("fletcher", "hello").to_dict()
+    stranger_post = Post("jacob", "hi").to_dict()
+    accounts = {
+        "juan": Account("juan", "12345678", ["fletcher"]),
+        "fletcher": Account("fletcher", "12345678", [], [friend_post]),
+        "jacob": Account("jacob", "12345678", [], [stranger_post])
+    }
+    assert System.viewPosts("juan", accounts) == [friend_post]
 
 if __name__ == "__main__":
     sys.exit(pytest.main([__file__]))

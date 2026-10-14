@@ -2,7 +2,10 @@
     "fletcher": {
         "username": "fletcher",
         "password": "cahi",
-        "list_of_friends": [],
+        "list_of_friends": [
+            "juan",
+            "flethcer"
+        ],
         "posts": []
     },
     "flethcer": {
@@ -34,9 +37,18 @@
                 "User": "juan",
                 "Content": "Ryan",
                 "Time stamp": "2026-10-12 17:28:53"
+            },
+            {
+                "User": "juan",
+                "Content": "I love dogs",
+                "Time stamp": "2026-10-13 21:24:40"
+            },
+            {
+                "User": "juan",
+                "Content": "Ryan wasn't here",
+                "Time stamp": "2026-10-13 21:24:53"
             }
         ]
-        "posts": []
     },
     "ryan": {
         "username": "ryan",

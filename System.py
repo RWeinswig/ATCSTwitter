@@ -1,17 +1,13 @@
 from Account import Account
 from Post import Post
-
 import json
-# Will add the filename into gitignore eventually
+
 FILENAME = "accounts.JSON"
 
 class System:
-
-    
-
     accounts = {}
     posts = []
-
+    # Verifies user in accounts
     def checkIfUserNameIsRight(username):
         if (username in self.accounts):
             return True
@@ -22,24 +18,16 @@ class System:
         if (self.checkIfUserNameIsRight(username)):
             if (self.accounts[username] == password):
                 return True
-   
-    def changePassword(account):
-        pass
-
-    def changeUsername(account):
-        pass
-
-
-    def viewPosts(username):
-        pass
-
-    def logIn(username, password):
-
-        pass
-
-    def typePost():
-        pass
-
+    def viewPosts(current_user, accounts):
+        # Prints every post made by the current user's friends and returns them
+        friend_posts = []
+        for friend in accounts[current_user].list_of_friends:
+            friend_posts.extend(accounts[friend].posts)
+        if not friend_posts:
+            print("Your friends haven't posted anything yet")
+        for post in friend_posts:
+            print(f"{post['User']} ({post['Time stamp']}): {post['Content']}")
+        return friend_posts
     
     def addFriend(current_user, friend, accounts):
             # Adds the friend to the current users friend list if friend is valid
@@ -58,11 +46,6 @@ class System:
                 saveAccounts(accounts)
                 print(f"Added {friend} as a friend")
                 return True
-
-
-
-
-
 def createAccount(accounts):
         # accounts = dictionary of existing users {username: Account}
 
